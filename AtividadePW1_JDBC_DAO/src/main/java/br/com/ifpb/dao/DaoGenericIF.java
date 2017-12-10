@@ -5,10 +5,17 @@
  */
 package br.com.ifpb.dao;
 
+import java.util.List;
+
 /**
  *
  * @author aguirre
  */
-public class DaoGenericIF {
+public interface DaoGenericIF <T> {
+    
+    public boolean incluir(T o);
+    public boolean alterar(T o);
+    public boolean excluir(T o);
+    public List<T> listar();
     
 }

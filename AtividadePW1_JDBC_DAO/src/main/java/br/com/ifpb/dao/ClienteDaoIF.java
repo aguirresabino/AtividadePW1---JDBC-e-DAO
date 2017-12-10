@@ -5,10 +5,12 @@
  */
 package br.com.ifpb.dao;
 
+import br.com.ifpb.model.Cliente;
+
 /**
  *
  * @author aguirre
  */
-public interface ClienteDaoIF {
+public interface ClienteDaoIF extends DaoGenericIF<Cliente>{
     
 }
