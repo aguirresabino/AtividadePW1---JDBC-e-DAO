@@ -120,6 +120,9 @@ public class ClienteDaoPostgres implements ClienteDaoIF{
 
                 clientes.add(cliente);
             }
+            
+            stmt.close();
+            con.close();
 
             return clientes;
             
@@ -129,6 +132,7 @@ public class ClienteDaoPostgres implements ClienteDaoIF{
         }
     }
     
+    @Override
     public Cliente getClienteById(int id) {
         try {
             Connection con = getConnection();
@@ -139,16 +143,21 @@ public class ClienteDaoPostgres implements ClienteDaoIF{
 
             ResultSet rs = stmt.executeQuery();
             
+            rs.next();
+            
             Cliente cliente = new Cliente();
-            cliente.setId(rs.getInt("Id"));
-            cliente.setNome(rs.getString("Nome"));
-            cliente.setDocumento(rs.getString("Documento"));
-            cliente.setSaldo(rs.getDouble("Saldo"));
+            cliente.setId(rs.getInt("id"));
+            cliente.setNome(rs.getString("nome"));
+            cliente.setDocumento(rs.getString("documento"));
+            cliente.setSaldo(rs.getDouble("saldo"));
             if(rs.getString("Ativo").equals(ClienteAtivoEnum.ATIVO.getValor())){
                 cliente.setAtivo(ClienteAtivoEnum.ATIVO);
             }else{
                 cliente.setAtivo(ClienteAtivoEnum.INATIVO);
             }
+            
+            stmt.close();
+            con.close();
             
             return cliente;
         } catch (ClassNotFoundException | SQLException ex) {

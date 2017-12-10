@@ -5,12 +5,14 @@
  */
 package br.com.ifpb.dao;
 
+import br.com.ifpb.model.Cliente;
 import br.com.ifpb.model.Pedido;
+import java.util.List;
 
 /**
  *
  * @author aguirre
  */
 public interface PedidoDaoIF extends DaoGenericIF<Pedido>{
-    
+    public List<Pedido> getPedidoByCliente(Cliente cliente);
 }

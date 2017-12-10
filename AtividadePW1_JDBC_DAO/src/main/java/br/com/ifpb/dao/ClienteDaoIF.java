@@ -12,5 +12,5 @@ import br.com.ifpb.model.Cliente;
  * @author aguirre
  */
 public interface ClienteDaoIF extends DaoGenericIF<Cliente>{
-    
+     public Cliente getClienteById(int id);
 }
