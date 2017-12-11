@@ -48,6 +48,11 @@ public class ClienteCtrl implements ClienteDaoIF{
     public List<Cliente> listar() {
         return clienteDao.listar();
     }
+
+    @Override
+    public Cliente getClienteByDocumento(String documento) {
+        return clienteDao.getClienteByDocumento(documento);
+    }
     
     
 }

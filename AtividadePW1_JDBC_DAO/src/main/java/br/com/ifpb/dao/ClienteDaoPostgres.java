@@ -166,6 +166,41 @@ public class ClienteDaoPostgres implements ClienteDaoIF{
         }
     }
     
+    @Override
+    public Cliente getClienteByDocumento(String documento) {
+        try {
+            Connection con = getConnection();
+            
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM Cliente WHERE documento = ?");
+
+            stmt.setString(1, documento);
+
+            ResultSet rs = stmt.executeQuery();
+            
+            rs.next();
+            
+            Cliente cliente = new Cliente();
+            cliente.setId(rs.getInt("id"));
+            cliente.setNome(rs.getString("nome"));
+            cliente.setDocumento(rs.getString("documento"));
+            cliente.setSaldo(rs.getDouble("saldo"));
+            if(rs.getString("Ativo").equals(ClienteAtivoEnum.ATIVO.getValor())){
+                cliente.setAtivo(ClienteAtivoEnum.ATIVO);
+            }else{
+                cliente.setAtivo(ClienteAtivoEnum.INATIVO);
+            }
+            
+            stmt.close();
+            con.close();
+            
+            return cliente;
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ClienteDaoPostgres.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     private Connection getConnection() throws ClassNotFoundException, SQLException{
        return new ConFactory().getConnection();
     }
