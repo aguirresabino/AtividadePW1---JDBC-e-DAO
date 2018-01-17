@@ -106,5 +106,46 @@ public class NewMain {
             System.out.println("O pedido não foi excluído");
         }
         System.out.println("_____________________________________________________");
+        
+        System.out.println("Cadastrando outro cliente.");
+        Cliente novoCliente;
+        String nomeCliente, documentoCliente = null;
+        Double saldoCliente = null;
+        System.out.print("Digite o nome do Cliente: ");
+        nomeCliente = scan.next();
+        System.out.print("Digite o documento do cliente: ");
+        documentoCliente = scan.next();
+        System.out.print("Digite o seu saldo: ");
+        saldoCliente = scan.nextDouble();
+        
+        novoCliente = new Cliente(nomeCliente, documentoCliente, saldoCliente, ClienteAtivoEnum.ATIVO);
+        if(clienteCtrl.incluir(novoCliente)){
+            System.out.println("Cadastro realizado com sucessso!");
+        }else{
+            System.out.println("Cadastro de cliente não realizado!");
+        }
+        System.out.println("_____________________________________________________");
+        
+        System.out.println("Alterando novo cliente cadastrado");
+        novoCliente = clienteCtrl.getClienteByDocumento(novoCliente.getDocumento());
+        novoCliente.setDocumento("Meu documento");
+        novoCliente.setNome("Nome Alterado");
+        if(clienteCtrl.alterar(novoCliente)){
+            System.out.println("Cliente alterado");
+        }else{
+            System.out.println("Cliente não foi alterado");
+        }
+        System.out.println("_____________________________________________________");
+        
+        System.out.println("Removendo primeiro cliente");
+        pedidos = pedidoCtrl.getPedidoByCliente(clienteCtrl.getClienteByDocumento(cliente.getDocumento()));
+        for(int i = 0; i < pedidos.size(); i++){
+            pedidoCtrl.excluir(pedidos.get(i));
+        }
+        if(clienteCtrl.excluir(clienteCtrl.getClienteByDocumento(cliente.getDocumento()))){
+            System.out.println("Cliente removido");
+        }else{
+            System.out.println("Cliente não foi removido");
+        }
     }
 }
